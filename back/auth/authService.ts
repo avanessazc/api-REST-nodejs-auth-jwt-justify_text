@@ -8,13 +8,20 @@ export const hashData = async (data: string): Promise<string> => {
   return hash;
 };
 
+export const isEmail = (email: string): boolean => {
+  if (email) {
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return regex.test(email);
+  }
+  return false;
+};
+
 export const createNewUser = async (data: {
   email: string;
   password: string;
 }): Promise<{ user: User; httpCode: HttpCode }> => {
   try {
     const newUser = await dataSource.getRepository(User).save(data);
-    console.log(newUser);
     return {
       user: newUser,
       httpCode: { status: 201, message: "User was created" },
