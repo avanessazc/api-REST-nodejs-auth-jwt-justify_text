@@ -24,9 +24,13 @@ export const api_token_post = async (req: Request, res: Response) => {
     });
     if (ret.httpCode.status === 201) {
       const token = createToken(ret.user.id);
-      res.status(ret.httpCode.status).send(token);
+      res.status(ret.httpCode.status).json({ token });
     } else {
       res.status(ret.httpCode.status).send(ret.httpCode);
     }
   }
+};
+
+export const api_justify_post = async (req: Request, res: Response) => {
+  res.status(200).json("Holas!!!!");
 };

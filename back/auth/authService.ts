@@ -2,7 +2,7 @@ import * as argon2 from "argon2";
 import { dataSource } from "../data/app-data-source";
 import { User } from "../entities/user.entity";
 import { HttpCode } from "../types/httpCode";
-import jwt, { Secret, JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export const hashData = async (data: string): Promise<string> => {
   const hash = await argon2.hash(data);
@@ -19,7 +19,7 @@ export const isEmail = (email: string): boolean => {
 
 export const createToken = (id: number): string => {
   const token = jwt.sign({ id }, process.env.TOKEN_SECRET, {
-    expiresIn: parseInt(process.env.EXPIRE_TIME_TOKEN),
+    expiresIn: process.env.EXPIRE_TIME_TOKEN,
   });
   return token;
 };
