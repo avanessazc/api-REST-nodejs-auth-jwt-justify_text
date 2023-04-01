@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { authRouters } from "./routers/authRouters";
 import { dataSource } from "./data/app-data-source";
+
 import "reflect-metadata";
 
 dotenv.config({ path: __dirname + "/.env" });

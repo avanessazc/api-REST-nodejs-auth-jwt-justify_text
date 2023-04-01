@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { hashData, createNewUser, isEmail } from "./authService";
+import { hashData, createNewUser, isEmail, createToken } from "./authService";
 import { HttpCode } from "../types/httpCode";
 import { User } from "../entities/user.entity";
 
@@ -23,7 +23,8 @@ export const api_token_post = async (req: Request, res: Response) => {
       password: hash,
     });
     if (ret.httpCode.status === 201) {
-      res.status(ret.httpCode.status).send(ret.user);
+      const token = createToken(ret.user.id);
+      res.status(ret.httpCode.status).send(token);
     } else {
       res.status(ret.httpCode.status).send(ret.httpCode);
     }
