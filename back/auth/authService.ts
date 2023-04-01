@@ -1,8 +1,8 @@
 import * as argon2 from "argon2";
 import { dataSource } from "../data/app-data-source";
-import { User } from "../entities/user.entity";
 import { HttpCode } from "../types/httpCode";
 import jwt from "jsonwebtoken";
+import { User } from "../entities";
 
 export const hashData = async (data: string): Promise<string> => {
   const hash = await argon2.hash(data);

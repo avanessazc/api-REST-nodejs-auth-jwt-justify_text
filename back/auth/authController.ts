@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { hashData, createNewUser, isEmail, createToken } from "./authService";
 import { HttpCode } from "../types/httpCode";
-import { User } from "../entities/user.entity";
+import { User } from "../entities";
 
 export const api_token_post = async (req: Request, res: Response) => {
   if (!isEmail(req.body.email)) {
@@ -28,20 +28,5 @@ export const api_token_post = async (req: Request, res: Response) => {
     } else {
       res.status(ret.httpCode.status).send(ret.httpCode);
     }
-  }
-};
-
-export const api_justify_post = (req: Request, res: Response) => {
-  if (req.method === "POST" && req.headers["content-type"] === "text/plain") {
-    let data = "";
-    req.on("data", (chunk) => {
-      data += chunk;
-    });
-    req.on("end", () => {
-      res.end("Received text: " + data);
-    });
-  } else {
-    res.statusCode = 404;
-    res.end();
   }
 };

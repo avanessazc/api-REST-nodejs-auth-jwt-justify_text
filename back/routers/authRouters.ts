@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { api_justify_post, api_token_post } from "../auth/authController";
 import { requireAuth } from "../middleware/authMiddleware";
+import { api_token_post } from "../auth/authController";
+import { api_justify_post } from "../justify/justifyController";
 
 export const authRouters = Router();
 
