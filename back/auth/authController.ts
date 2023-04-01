@@ -31,6 +31,17 @@ export const api_token_post = async (req: Request, res: Response) => {
   }
 };
 
-export const api_justify_post = async (req: Request, res: Response) => {
-  res.status(200).json("Holas!!!!");
+export const api_justify_post = (req: Request, res: Response) => {
+  if (req.method === "POST" && req.headers["content-type"] === "text/plain") {
+    let data = "";
+    req.on("data", (chunk) => {
+      data += chunk;
+    });
+    req.on("end", () => {
+      res.end("Received text: " + data);
+    });
+  } else {
+    res.statusCode = 404;
+    res.end();
+  }
 };
