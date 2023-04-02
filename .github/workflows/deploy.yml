@@ -1,0 +1,31 @@
+name: Deploy App
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        uses: docker/compose-action@v2
+        with:
+          compose-file: docker-compose.yml
+          project-name: myapp
+
+      - name: Start services
+        run: docker-compose up --build
+        env:
+          POSTGRES_HOST: ${{ vars.POSTGRES_HOST }}
+          POSTGRES_PORT: ${ vars.POSTGRES_PORT }}
+          POSTGRES_USER: ${ vars.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${ vars.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${ vars.POSTGRES_DB }}
+          TOKEN_SECRET: ${ vars.TOKEN_SECRET }}
+          EXPIRE_TIME_TOKEN: ${ vars.EXPIRE_TIME_TOKEN }}
+          MAX_WORDS_QUANTITY: ${ vars.MAX_WORDS_QUANTITY }}
+          PGADMIN_DEFAULT_EMAIL: ${ vars.PGADMIN_DEFAULT_EMAIL }}
+          PGADMIN_DEFAULT_PASSWORD: ${ vars.PGADMIN_DEFAULT_PASSWORD }}
+          PORT: ${ vars.PORT }}
