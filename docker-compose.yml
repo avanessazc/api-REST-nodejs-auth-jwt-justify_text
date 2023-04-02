@@ -34,8 +34,7 @@ services:
   nodejs:
     build: ./back
     depends_on: 
-      postgres:
-        condition: service_healthy
+      - postgres
     ports:
       - 3000:3000
     container_name: nodejs_c
