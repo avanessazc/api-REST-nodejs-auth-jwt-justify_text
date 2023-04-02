@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { tokenWords, updateToken } from "./justifyService";
+import { getLines, tokenWords, updateToken } from "./justifyService";
 import { Token } from "../entities";
 
 export const api_justify_post = (req: Request, res: Response) => {
@@ -14,29 +14,21 @@ export const api_justify_post = (req: Request, res: Response) => {
       const bearerToken = bearer[1];
       const token: Token | null = await tokenWords(bearerToken);
 
-      let totalWords: number = data.split(/\s+/).length;
+      const totalWords: number = data.split(/\s+/).length;
       if (
         (token === null &&
           totalWords <= parseInt(process.env.MAX_WORDS_QUANTITY)) ||
         (token !== null &&
           token.words + totalWords <= parseInt(process.env.MAX_WORDS_QUANTITY))
       ) {
-        console.log("totalWords:", totalWords);
         const words: number =
           token === null ? totalWords : totalWords + token.words;
         const ret = await updateToken({ token: bearerToken, words: words });
         if (ret.httpCode.status === 409) {
           res.status(ret.httpCode.status).send(ret.httpCode.message);
         }
-        // JUSTIFY FUNCTION //
-        //   let paragraphes: string[] = data.split(/[\r\n\t]+/gm);
-        //   let totalWords: number = 0;
-        //   let wordsArray: string[];
-        //   for (let i = 0; i < paragraphes.length; i++) {
-        //     wordsArray = paragraphes[i].split(/\s+/);
-        //     totalWords += wordsArray.length;
-        //   }
-        res.end("Received text: " + data);
+        const text: string[] = getLines(data, 80);
+        res.end(text.join('\n'));
       } else {
         res.status(402).send("Payment Required");
       }

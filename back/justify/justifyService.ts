@@ -32,3 +32,36 @@ export const tokenWords = async (token: string): Promise<Token | null> => {
   });
   return ret;
 };
+
+export const getLines = (text: string, maxLength: number): string[] => {
+  const words: string[] = text.split(/\s+/);
+  let lineLength = 0;
+  const lines: string[] = [];
+  let line = "";
+  for (let i = 0; i < words.length; i++) {
+    const currentWord: string = words[i];
+    const currentwordLen: number = currentWord.length;
+    const nextWord: string = words[i + 1];
+    const nextWordLen: number = nextWord ? nextWord.length : 0;
+    if (lineLength + currentwordLen === maxLength) {
+      line += currentWord;
+      lines.push(line.trim());
+      lineLength = 0;
+      line = "";
+      continue;
+    } else if (lineLength + currentwordLen < maxLength) {
+      line += currentWord;
+      line += " ";
+      lineLength = line.length;
+    }
+    if (lineLength + nextWordLen > maxLength) {
+      lines.push(line.trim());
+      lineLength = 0;
+      line = "";
+    }
+  }
+  if (line) {
+    lines.push(line.trim());
+  }
+  return lines;
+};
