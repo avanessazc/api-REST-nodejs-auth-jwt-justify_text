@@ -28,7 +28,7 @@ export const api_justify_post = (req: Request, res: Response) => {
           res.status(ret.httpCode.status).send(ret.httpCode.message);
         }
         const text: string[] = getLines(data, 80);
-        res.end(text.join('\n'));
+        res.end(text.join("\n"));
       } else {
         res.status(402).send("Payment Required");
       }
