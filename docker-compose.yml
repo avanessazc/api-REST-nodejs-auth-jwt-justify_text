@@ -10,7 +10,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
-      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     volumes:
       - pgdata:/var/lib/postgresql/data/
     healthcheck:
@@ -37,7 +37,7 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "3000:3000"
+      - 3000:3000
     container_name: nodejs_c
     environment:
       - POSTGRES_HOST=${POSTGRES_HOST}
