@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getLines, tokenWords, updateToken } from "./justifyService";
+import { justifyText, tokenWords, updateToken } from "./justifyService";
 import { Token } from "../entities";
 
 export const api_justify_post = (req: Request, res: Response) => {
@@ -27,8 +27,8 @@ export const api_justify_post = (req: Request, res: Response) => {
         if (ret.httpCode.status === 409) {
           res.status(ret.httpCode.status).send(ret.httpCode.message);
         }
-        const text: string[] = getLines(data, 80);
-        res.end(text.join("\n"));
+        const text: string = justifyText(data, 80);
+        res.end(text);
       } else {
         res.status(402).send("Payment Required");
       }

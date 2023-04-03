@@ -65,3 +65,32 @@ export const getLines = (text: string, maxLength: number): string[] => {
   }
   return lines;
 };
+
+const justifyLine = (line: string, maxLength: number): string => {
+  const words = line.split(/ +/);
+  let numberOfChars = 0;
+  for (let i = 0; i < words.length; i++) {
+    numberOfChars = numberOfChars + words[i].length;
+  }
+  let spacesToDistribute: number = maxLength - numberOfChars;
+  const newLine: string[] = words.map((word: string, index: number) => {
+    const numGaps = words.length - index - 1;
+    const padding = (spacesToDistribute / numGaps) | 0;
+    spacesToDistribute -= padding;
+    return word.padEnd(word.length + padding);
+  });
+  return newLine.join("");
+};
+
+export const justifyText = (text: string, maxLength: number): string => {
+  const paragraphes: string[] = text.split(/[\n]+/gm);
+  const newParagraphs: string[] = [];
+  for (let i = 0; i < paragraphes.length; i++) {
+    const lines = getLines(paragraphes[i], maxLength);
+    const justifiedLines = lines.map((line: string) =>
+      justifyLine(line, maxLength)
+    );
+    newParagraphs.push(justifiedLines.join("\n"));
+  }
+  return newParagraphs.join("\n\n");
+};
