@@ -22,8 +22,10 @@
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
     "jsonwebtoken": "^9.0.0",
+    "nodemon": "^2.0.22",
     "pg": "^8.10.0",
     "reflect-metadata": "^0.1.13",
+    "ts-node": "^10.9.1",
     "typeorm": "^0.3.12",
     "typescript": "^5.0.3"
   },

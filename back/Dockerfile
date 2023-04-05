@@ -13,8 +13,6 @@ RUN mkdir -p /etc/node/ssl && \
 
 COPY package*.json ./
 
-RUN npm install -g ts-node
-RUN npm install -g nodemon
 RUN npm install
 
 COPY . .
