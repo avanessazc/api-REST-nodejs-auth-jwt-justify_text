@@ -13,7 +13,6 @@ export const api_justify_post = (req: Request, res: Response) => {
       const bearer = bearerHeader.split(" ");
       const bearerToken = bearer[1];
       const token: Token | null = await tokenWords(bearerToken);
-
       const totalWords: number = data.split(/\s+/).length;
       if (
         (token === null &&

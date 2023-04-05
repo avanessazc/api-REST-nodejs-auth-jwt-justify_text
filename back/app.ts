@@ -6,11 +6,12 @@ import * as fs from "fs";
 import * as https from "https";
 
 import "reflect-metadata";
+import { justifyRouters } from "./routers/justifyRouters";
 
 dotenv.config({ path: __dirname + "/.env" });
 const port = process.env.PORT;
 
-// establish database connection
+/* Establish database connection */
 dataSource
   .initialize()
   .then(() => {
@@ -32,6 +33,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server:)");
 });
 app.use(authRouters);
+app.use(justifyRouters);
 
 https.createServer(httpsOpitons, app).listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

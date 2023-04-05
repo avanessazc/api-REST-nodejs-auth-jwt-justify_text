@@ -17,5 +17,4 @@ RUN npm install -g ts-node
 RUN npm install -g nodemon
 RUN npm install
 
-# COPY tsconfig.json ./
 COPY . .
